@@ -1,6 +1,8 @@
 using Company.Data.Context;
 using Company.Repository.Interface;
 using Company.Repository.Repository;
+using Company.Service.Interface;
+using Company.Service.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -22,7 +24,7 @@ namespace Company.Web
             //builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
 
             builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
-            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 
 
 
