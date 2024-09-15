@@ -23,8 +23,7 @@ namespace Company.Web
             });
             //builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
 
-            builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
-            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+           
 
 
 
