@@ -45,7 +45,21 @@ namespace Company.Web.Controllers
                return View(department);
             }
 
+
         }
+        public IActionResult Details(int? id)
+        {
+            var department = _departmentService.GetById(id);
+            if (department is null)
+            {
+               return RedirectToAction("ErrorPage",null,"Home");
+            }
+           
+            return View(department);
+        }
+
+
+
     }
 }
 
