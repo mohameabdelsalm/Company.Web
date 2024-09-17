@@ -18,10 +18,10 @@ namespace Company.Web.Controllers
         {
             var departments = _departmentService.GetAll();
             return View(departments);
-           
+
         }
         [HttpGet]
-        public IActionResult create() 
+        public IActionResult create()
         {
             return View();
         }
@@ -30,33 +30,52 @@ namespace Company.Web.Controllers
         {
             try
             {
-              if (ModelState.IsValid)
-              {
+                if (ModelState.IsValid)
+                {
                     _departmentService.Add(department);
                     return RedirectToAction(nameof(Index));
-              }
+                }
                 ModelState.AddModelError("Department Error", "Validation errors");
                 return View(department);
             }
 
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 ModelState.AddModelError("Department Error", ex.Message);
-               return View(department);
+                return View(department);
             }
 
 
         }
-        public IActionResult Details(int? id)
+
+        //Page Details => Presention Details Department ById
+        public IActionResult Details(int? id,string viewName="Details")
         {
             var department = _departmentService.GetById(id);
             if (department is null)
             {
-               return RedirectToAction("ErrorPage",null,"Home");
+                return RedirectToAction("ErrorPage", null, "Home");
             }
-           
-            return View(department);
+
+            return View(viewName,department);
         }
+        [HttpGet]
+        public IActionResult Update(int? id) 
+        {
+           
+            return Details(id,"Update");
+        }
+
+        [HttpPost]
+        public IActionResult Update(int? id,Department department) 
+        {
+            if(department.ID!=id.Value)
+              return RedirectToAction("ErrorPage", null, "Home");
+
+            _departmentService.Update(department);
+            return RedirectToAction(nameof(Index));
+        }
+
 
 
 
