@@ -70,11 +70,31 @@ namespace Company.Web.Controllers
         public IActionResult Update(int? id,Department department) 
         {
             if(department.ID!=id.Value)
-              return RedirectToAction("ErrorPage", null, "Home");
+              return RedirectToAction("ErrorPage", "Home", "Home");
 
             _departmentService.Update(department);
             return RedirectToAction(nameof(Index));
         }
+
+        public IActionResult Delete(int id)
+        {
+            var department = _departmentService.GetById(id);
+            if (department is null)
+            {
+                return RedirectToAction("ErrorPage", null, "Home");
+            }
+            
+            _departmentService.Delete(department);
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
+
+
+
 
 
 
