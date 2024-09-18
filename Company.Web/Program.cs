@@ -21,11 +21,10 @@ namespace Company.Web
                 Options.UseSqlServer(builder.Configuration.GetConnectionString("DafultConnection"));
 
             });
+
             //builder.Services.AddScoped<IDepartmentRepository,DepartmentRepository>();
 
-
-            builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-
+            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
             builder.Services.AddScoped<IDepartmentService,DepartmentService>();
 
 
