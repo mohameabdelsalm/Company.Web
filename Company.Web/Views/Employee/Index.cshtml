@@ -1,0 +1,71 @@
+﻿@model IEnumerable<Employee>
+
+<h1> All Employee</h1>
+
+
+
+<a asp-controller="Employee" asp-action="Index" class="btn btn-danger"> Add New Employee </a>
+
+<div class="row justify-content-center align-baseline align-items-center mt-5">
+    <form class="row col-8 offset-2" asp-action="Index">
+        <div class="col-8">
+            <input type="text" class="form-control" name="searchInp" placeholder="Search By Name" />
+        </div>
+
+        <div>
+            <input type="submit" value="Search" class="btn btn alert-success"/>
+        </div>
+    </form>
+
+</div>
+
+@if (Model.Count()>0)
+{
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(D=>D.Name)</th>
+                <th>@Html.DisplayNameFor(D => D.Age)</th>
+                <th>@Html.DisplayNameFor(D => D.Address)</th>
+                <th>@Html.DisplayNameFor(D => D.Salary)</th>
+                <th>@Html.DisplayNameFor(D => D.Email)</th>
+                <th>@Html.DisplayNameFor(D => D.PhoneNumber)</th>
+                <th>@Html.DisplayNameFor(D => D.HiringDate)</th>
+                <th>Details</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach(var Employee in Model)
+            {
+               <tr>
+                    <td>@Employee.Name</td>
+                    <td>@Employee.Age</td>
+                    <td>@Employee.Address</td>
+                    <th>@Html.DisplayFor(M => Employee.Salary)</th>
+                    <th>@Html.DisplayFor(M => Employee.Email)</th>
+                    <td>@Employee.PhoneNumber</td>
+                    <td>@Employee.HiringDate</td>
+                    <partial name="_ActionButtonsPartialView" model="Employee.ID">
+               </tr> 
+              
+            }
+
+
+        </tbody>
+    </table>
+
+}
+else
+{
+    
+    <div class="mt-5 alert alert-warning">
+
+        <h3>There is No Employee</h3>
+    </div>
+
+}
+
+
