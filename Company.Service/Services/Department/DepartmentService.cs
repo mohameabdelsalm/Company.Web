@@ -37,7 +37,7 @@ namespace Company.Service.Services
 
         public IEnumerable<Department> GetAll()
         {
-           var departments = _unitOfWork.DepartmentRepository.GetAll().Where(x=>x.IsDeleted==false);
+            var departments = _unitOfWork.DepartmentRepository.GetAll().Where(x => x.IsDeleted == false);
             return departments;
         }
 
