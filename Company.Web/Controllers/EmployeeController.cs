@@ -1,5 +1,6 @@
 ﻿using Company.Data.Entites;
 using Company.Service.Interface;
+using Company.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Web.Controllers
@@ -25,9 +26,33 @@ namespace Company.Web.Controllers
                 return View(employees);
             }
         }
+        [HttpGet]
         public IActionResult Create()
         {
+            
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Employee employee)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _employeeService.Add(employee);
+                    return RedirectToAction();
+                }
+           
+                return View(employee);
+            }
+
+            catch (Exception ex)
+            {
+               
+                return View(employee);
+            }
+
         }
         public IActionResult Update()
         {
