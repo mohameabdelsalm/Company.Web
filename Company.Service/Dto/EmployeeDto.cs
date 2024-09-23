@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace Company.Service.Dto
         [MaxLength(11)]
         public int PhoneNumber { get; set; }
         public DateTime HiringDate { get; set; }
+        public IFormFile Image { get; set; }
         public string ImageUrl { get; set; }
         public DepartmentDto Department { get; set; }
         public int DepartmentId { get; set; }

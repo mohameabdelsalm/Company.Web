@@ -2,6 +2,7 @@
 using Company.Data.Entites;
 using Company.Repository.Interface;
 using Company.Service.Dto;
+using Company.Service.Helper;
 using Company.Service.Interface;
 using Company.Service.Mapping;
 
@@ -20,6 +21,8 @@ namespace Company.Service.Services
 
         public void Add(EmployeeDto employeeDto)
         {
+            employeeDto.ImageUrl = DocumentSettings.UploadFile(employeeDto.Image, "Images");
+
              Employee employee = _mapper.Map<Employee>(employeeDto);
 
             _unitOfWork.EmployeeRepository.Add(employee);
