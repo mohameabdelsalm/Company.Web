@@ -24,16 +24,16 @@ namespace Company.Service.Services
         public void Add(DepartmentDto departmentDto)
         {
 
-            //Department mappingDepartment = _mapper.Map<Department>(departmentDto);
-            
-            _unitOfWork.DepartmentRepository.Add(departmentDto);
+            var mappingDepartment = _mapper.Map<Department>(departmentDto);
+
+            _unitOfWork.DepartmentRepository.Add(mappingDepartment);
             _unitOfWork.Complete();
         }
 
         public void Delete(DepartmentDto departmentDto)
         {
-            //Department mappingDepartment = _mapper.Map<Department>(departmentDto);
-            _unitOfWork.DepartmentRepository.Delete(departmentDto);
+            Department mappingDepartment = _mapper.Map<Department>(departmentDto);
+            _unitOfWork.DepartmentRepository.Delete(mappingDepartment);
             _unitOfWork.Complete();
         }
 
@@ -41,8 +41,8 @@ namespace Company.Service.Services
         {
            
             var departments = _unitOfWork.DepartmentRepository.GetAll();
-            //IEnumerable < DepartmentDto > Mapdept=_mapper.Map<IEnumerable<DepartmentDto>>(departments);
-            return departments;
+            var Mapdept = _mapper.Map<IEnumerable<DepartmentDto>>(departments);
+            return Mapdept;
         }
 
         public DepartmentDto GetById(int? id)
@@ -53,16 +53,17 @@ namespace Company.Service.Services
             var departmet = _unitOfWork.DepartmentRepository.GetById(id.Value);
 
             if (departmet is null)
-            {
+            
                 return null;
-            }
-            return departmet;
+            var mapdepartment=_mapper.Map<DepartmentDto>(departmet);
+
+            return mapdepartment;
         }
 
         public void Update(DepartmentDto department)
         {
-            _unitOfWork.DepartmentRepository.Update(department);
-            _unitOfWork.Complete();
+            //_unitOfWork.DepartmentRepository.Update(department);
+            //_unitOfWork.Complete();
         }
     }
 }
