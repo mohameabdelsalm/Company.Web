@@ -1,4 +1,8 @@
-﻿@model Employee
+﻿@model EmployeeDto
+
+@{
+    var department = new SelectList(ViewBag.Departments, nameof(Department.ID), nameof(Department.Name));
+}
 
 <form asp-action="Create">
 
@@ -24,7 +28,7 @@
     </div>
     <div class="form-group">
         <label class="col-form-label" asp-for="Email"></label>
-        <input type="number" asp-for="Email" class="form-control" />
+        <input type="email" asp-for="Email" class="form-control" />
         <span asp-validation-for="Email" class="text-danger"> </span>
     </div>
     <div class="form-group">
@@ -38,12 +42,22 @@
         <span asp-validation-for="HiringDate" class="text-danger"> </span>
     </div>
 
-   @*  <div class="form-group">
-        <label class="col-form-label" asp-for="ImageUrl"></label>
+    <div class="form-group">
+        <label class="col-form-label" asp-for="Department"></label>
+        <br/>
+        <select class="from-control"  asp-for="DepartmentId" asp-items="@department">
+        <option value="@null" > --Select Department </option>
+
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label class="col-form-label" asp-for="ImageUrl">Image</label>
+        <br/>
         <input type="file" class="form-control-file" asp-for="ImageUrl" />
 
-    </div> *@
-   
+    </div>
+   <br/>
     <input type="submit" value="Create" class="btn btn-primary" />
     <a asp-action="Index" class="btn btn-light">Back To List </a>
 
