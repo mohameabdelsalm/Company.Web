@@ -1,5 +1,6 @@
 ﻿using Company.Data.Entites;
 using Company.Repository.Interface;
+using Company.Service.Dto;
 using Company.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -26,7 +27,7 @@ namespace Company.Web.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Department department)
+        public IActionResult Create(DepartmentDto department)
         {
             try
             {
@@ -67,7 +68,7 @@ namespace Company.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int? id, Department department)
+        public IActionResult Update(int? id, DepartmentDto department)
         {
             if (department.ID != id.Value)
                 return RedirectToAction("Error");
