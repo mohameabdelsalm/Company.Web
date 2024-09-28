@@ -1,42 +1,51 @@
-﻿using Company.Data.Entites;
+﻿using AutoMapper;
+using Company.Data.Entites;
 using Company.Repository.Interface;
-using Company.Repository.Repository;
+using Company.Service.Dto;
+using Company.Service.Helper;
 using Company.Service.Interface;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Company.Service.Mapping;
 
 namespace Company.Service.Services
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
-        public EmployeeService(IUnitOfWork unitOfWork)
+        public EmployeeService(IUnitOfWork unitOfWork,IMapper mapper)
         {
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public void Add(Employee employee)
+        public void Add(EmployeeDto employeeDto)
         {
-            
-        }
+            employeeDto.ImageUrl = DocumentSettings.UploadFile(employeeDto.Image, "Images");
 
-        public void Delete(Employee employee)
-        {
-           _unitOfWork.EmployeeRepository.Delete(employee);
+             Employee employee = _mapper.Map<Employee>(employeeDto);
+
+            _unitOfWork.EmployeeRepository.Add(employee);
             _unitOfWork.Complete();
         }
 
-        public IEnumerable<Employee> GetAll()
+        public void Delete(EmployeeDto employeeDto)
         {
-            var employees = _unitOfWork.EmployeeRepository.GetAll();
-            return employees;
+            Employee employee = _mapper.Map<Employee>(employeeDto);
+            _unitOfWork.EmployeeRepository.Delete(employee);
+            _unitOfWork.Complete();
         }
 
-        public Employee GetById(int? id)
+        public IEnumerable<EmployeeDto> GetAll()
+        {
+            var employees = _unitOfWork.EmployeeRepository.GetAll();
+            IEnumerable<EmployeeDto> MapEmployees = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
+
+           
+            return MapEmployees;
+        }
+
+        public EmployeeDto GetById(int? id)
         {
 
             if (id == null)
@@ -45,22 +54,27 @@ namespace Company.Service.Services
             var employees = _unitOfWork.EmployeeRepository.GetById(id.Value);
 
             if (employees is null)
-            {
-                return null;
-            }
-            return employees;
+            
+             return null;
+            EmployeeDto employeeDto = _mapper.Map<EmployeeDto>(employees);
+            
+            return employeeDto;
         }
 
-        public IEnumerable<Employee> GetEmployeeByName(string name)
-        
-          => _unitOfWork.EmployeeRepository.GetEmployeeByName(name);
-
-        
-
-        public void Update(Employee employee)
+        public IEnumerable<EmployeeDto> GetEmployeeByName(string name)
         {
-           _unitOfWork.EmployeeRepository.Update(employee);
-            _unitOfWork.Complete();
+            var employees = _unitOfWork.EmployeeRepository.GetEmployeeByName(name);
+            IEnumerable<EmployeeDto> MapEmployees = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
+            return MapEmployees;
+        }
+
+
+
+
+        public void Update(EmployeeDto employee)
+        {
+
+           
         }
     }
 }

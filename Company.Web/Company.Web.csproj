@@ -38,4 +38,8 @@
     <None Include="Views\Home\ErrorPage.cshtml" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Files\Images\" />
+  </ItemGroup>
+
 </Project>
