@@ -57,9 +57,17 @@ namespace Company.Web.Controllers
             }
 
         }
-        public IActionResult Update()
+             public IActionResult Delete(int id)
         {
-            return View();
+            var employees = _employeeService.GetById(id);
+            if (employees is null)
+            {
+                return RedirectToAction("Error");
+            }
+
+            _employeeService.Delete(employees);
+
+            return RedirectToAction(nameof(Index));
         }
         //public IActionResult Index()
         //{

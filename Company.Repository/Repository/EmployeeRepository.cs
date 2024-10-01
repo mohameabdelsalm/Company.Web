@@ -19,7 +19,11 @@ namespace Company.Repository.Repository
         }
 
         public IEnumerable<Employee> GetEmployeeByName(string name)
-        => _context.employees.Where(x => x.Name.Trim().ToLower().Contains(name.Trim().ToLower())).ToList();
+        => _context.employees.Where(x => 
+        x.Name.Trim().ToLower().Contains(name.Trim().ToLower())||
+        x.Email.Trim().ToLower().Contains(name.Trim().ToLower())||
+        x.PhoneNumber.Trim().ToLower().Contains(name.Trim().ToLower())
+        ).ToList();
 
         public IEnumerable<Employee> GetEmployeeByAdress(string address)
         {
