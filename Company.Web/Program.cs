@@ -1,9 +1,11 @@
 using Company.Data.Context;
+using Company.Data.Entites;
 using Company.Repository.Interface;
 using Company.Repository.Repository;
 using Company.Service.Interface;
 using Company.Service.Mapping;
 using Company.Service.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -23,15 +25,37 @@ namespace Company.Web
 
             });
 
-            builder.Services.AddScoped<IDepartmentService,DepartmentService>();
-            builder.Services.AddScoped<IEmployeeService,EmployeeService>();
+            builder.Services.AddScoped<IDepartmentService, DepartmentService>();
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
-            builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddAutoMapper(x => x.AddProfile(new EmployeeProfile()));
             builder.Services.AddAutoMapper(x => x.AddProfile(new DepartmentProfile()));
 
 
+            builder.Services.AddIdentity<ApplicationUser, IdentityRole>(config =>
+            {
+                config.Password.RequiredUniqueChars = 2;
+                config.Password.RequireUppercase = true;
+                config.Password.RequireLowercase = true;
+                config.Password.RequireDigit = true;
+                config.Password.RequireNonAlphanumeric = true;
+                config.User.RequireUniqueEmail = true;
+                config.Lockout.AllowedForNewUsers = true;
+                config.Lockout.MaxFailedAccessAttempts = 5;
+                config.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromHours(1);
+            }).AddEntityFrameworkStores<CompanyDbContext>()
+            .AddDefaultTokenProviders();
 
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan= TimeSpan.FromDays(60);
+                options.SlidingExpiration=true;
+                options.LoginPath = "/Account/Login";
+                options.LogoutPath="/Account/Logout";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
 
 
 
