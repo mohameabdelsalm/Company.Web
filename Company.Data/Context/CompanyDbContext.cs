@@ -1,13 +1,12 @@
 ﻿using Company.Data.Entites;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Company.Data.Entites;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+
 
 namespace Company.Data.Context
 {
-    public class CompanyDbContext :IdentityDbContext<ApplicationUser>
+    public class CompanyDbContext : IdentityDbContext<ApplicationUser>
     {
         public CompanyDbContext(DbContextOptions<CompanyDbContext> options):base(options)
         {

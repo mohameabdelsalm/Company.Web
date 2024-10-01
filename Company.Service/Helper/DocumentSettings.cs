@@ -24,7 +24,7 @@ namespace Company.Service.Helper
             using var fileStream = new FileStream(filePath, FileMode.Create);
             file.CopyTo(fileStream);
 
-            return filePath;
+            return fileName;
         }
     }
 }
