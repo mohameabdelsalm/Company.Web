@@ -1,10 +1,13 @@
 ﻿using Company.Data.Entites;
+using Company.web.Entites;
+using Company.Web.Helper;
 using Company.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 
 namespace Company.Web.Controllers
 {
@@ -41,7 +44,7 @@ namespace Company.Web.Controllers
 
 				if (result.Succeeded)
 				{
-					return RedirectToAction("SignIn");
+					return RedirectToAction("Login");
 				}
 				foreach (var error in result.Errors)
 				{
@@ -122,6 +125,112 @@ namespace Company.Web.Controllers
 			return RedirectToAction(nameof(Login));
 		}
 		#endregion
+
+		
+		#region ForgetPassword
+		[HttpGet]
+		public IActionResult ForgetPassword()
+		{
+			return View();
+		}
+
+
+		[HttpPost]
+		public async Task<IActionResult> ForgetPassword(ForgetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var user = await _userManager.FindByEmailAsync(model.Email);
+				if (user is not null)
+				{
+					// Generate Token
+
+					var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+					// create URL Which Send in Body of The Email
+
+					var url = Url.Action("ResetPassword", "Account", new { email = model.Email, token = token }, Request.Scheme);
+
+					// https://localhost:44384/Account/ResetPassword?email=ahmed@gmail.com&token=
+
+					// Create Email
+
+					var email = new SendEmail()
+					{
+						To = model.Email,
+						Subject = "Reset Password",
+						Body = url,
+					};
+
+					// Send Email
+
+					EmailSetting.SendEmail(email);
+					//_mailService.SendMail(email);
+
+					return RedirectToAction(nameof(CheckYourInbox));
+				}
+
+				ModelState.AddModelError(string.Empty, "Invalid Email!");
+
+			}
+
+			return View(nameof(ForgetPassword), model);
+		}
+
+		//send sms
+		//[HttpPost]
+		//public async Task<IActionResult> SendSms(ForgetPasswordViewModel model)
+		//{
+		//	if (ModelState.IsValid)
+		//	{
+		//		var user = await _userManager.FindByEmailAsync(model.Email);
+		//		if (user is not null)
+		//		{
+		//			// Generate Token
+
+		//			var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+		//			// create URL Which Send in Body of The Email
+
+		//			var url = Url.Action("ResetPassword", "Account", new { email = model.Email, token = token }, Request.Scheme);
+
+		//		//https://localhost:44384/Account/ResetPassword?email=ahmed@gmail.com&token=
+
+		//			// Create Email
+
+		//			//var sms = new SmsMessage()
+		//			//{
+		//			//	PhoneNumber = user.PhoneNumber,
+		//			//	Body = url,
+		//			//};
+
+		//			// Send Email
+
+		//			//EmailSettings.SendEmail(email);
+		//			// _mailService.SendMail(email);
+		//			//_smsService.Send(sms);
+
+		//			//return RedirectToAction(nameof(CheckYourInbox));
+		//			return Ok("Check Your Phone");
+		//		}
+
+		//		ModelState.AddModelError(string.Empty, "Invalid Email!");
+
+		//	}
+
+		//	return View(nameof(ForgetPassword), model);
+		//}
+
+
+
+
+		public IActionResult CheckYourInbox()
+		{
+			return View();
+		}
+
+		#endregion
+		
 
 	}
 }
