@@ -230,7 +230,57 @@ namespace Company.Web.Controllers
 		}
 
 		#endregion
-		
+
+		#region Reset Password
+		[HttpGet]
+		public IActionResult ResetPassword(string email, string token)
+		{
+			TempData["email"] = email;
+			TempData["token"] = token;
+
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+		{
+			if (ModelState.IsValid)
+			{
+				var email = TempData["email"] as string;
+				var token = TempData["token"] as string;
+
+				var user = await _userManager.FindByEmailAsync(email);
+
+				if (user is not null)
+				{
+
+					var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
+					if (result.Succeeded)
+					{
+						return RedirectToAction(nameof(Login));
+					}
+					foreach (var error in result.Errors)
+					{
+						ModelState.AddModelError(string.Empty, error.Description);
+
+					}
+
+				}
+				ModelState.AddModelError(string.Empty, "Invalid Reset Password Please Try Again!");
+
+			}
+
+			return View(model);
+		}
+
+		#endregion
+
+
+
+		public IActionResult AccessDenied()
+		{
+			return View();
+		}
 
 	}
 }
