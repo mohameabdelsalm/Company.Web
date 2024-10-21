@@ -13,7 +13,7 @@ namespace Company.Data.Configration
     {
         void IEntityTypeConfiguration<Department>.Configure(EntityTypeBuilder<Department> builder)
         {
-           builder.Property(x=>x.ID).UseIdentityColumn(10,10);
+            builder.Property(x => x.ID).UseIdentityColumn(10, 10);
             builder.HasIndex(x => x.Name).IsUnique(true);
         }
     }
