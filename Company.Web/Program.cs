@@ -75,12 +75,12 @@ namespace Company.Web
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Account}/{action=Login}");
+                pattern: "{controller=Home}/{action=Index}");
 
             app.Run();
         }

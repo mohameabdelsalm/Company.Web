@@ -125,7 +125,7 @@ namespace Company.Data.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("departments");
+                    b.ToTable("departments", (string)null);
                 });
 
             modelBuilder.Entity("Company.Data.Entites.Employee", b =>
@@ -179,7 +179,7 @@ namespace Company.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
-                    b.ToTable("employees");
+                    b.ToTable("employees", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
