@@ -2,11 +2,13 @@
 using Company.Repository.Interface;
 using Company.Service.Dto;
 using Company.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 
 namespace Company.Web.Controllers
 {
+    [Authorize(Roles = "Department")]
     public class DepartmentController : Controller
     {
         private readonly IDepartmentService _departmentService;
