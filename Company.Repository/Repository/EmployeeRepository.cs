@@ -25,10 +25,7 @@ namespace Company.Repository.Repository
         x.PhoneNumber.Trim().ToLower().Contains(name.Trim().ToLower())
         ).ToList();
 
-        public IEnumerable<Employee> GetEmployeeByAdress(string address)
-        {
-            throw new NotImplementedException();
-        }
+     
 
       
     }
