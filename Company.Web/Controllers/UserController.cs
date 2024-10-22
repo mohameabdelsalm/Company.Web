@@ -8,6 +8,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Library.Web.Controllers
 {
+
     [Authorize(Roles = "Admin")]
     public class UserController : Controller
     {
