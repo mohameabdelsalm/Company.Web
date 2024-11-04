@@ -8,7 +8,7 @@ using Microsoft.Identity.Client;
 
 namespace Company.Web.Controllers
 {
-    [Authorize(Roles = "Department")]
+    //[Authorize(Roles = "Department")]
     public class DepartmentController : Controller
     {
         private readonly IDepartmentService _departmentService;

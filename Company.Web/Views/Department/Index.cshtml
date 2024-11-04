@@ -4,6 +4,7 @@
 @{
     ViewData["Title"] = "All Departments";
 }
+<h1>All Departments</h1>
 
  <a asp-controller="Department" asp-action="Create" class="btn btn-primary">Create Department</a>
           <br />
@@ -29,7 +30,7 @@
                     <td>@department.Code</td>
                     <td>@department.Name</td>
                     <td>@department.CreateAt</td>
-                    <partial name="_ActionButtonsPartialView" model="department.ID">
+                    <partial name="_ActionButtonsPartialView" model="@department.ID.ToString()">
                    
                 </tr>
             }

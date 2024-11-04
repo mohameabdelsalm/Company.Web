@@ -57,7 +57,7 @@
                     <th>@Html.DisplayFor(M => Employee.Email)</th>
                     <td>@Employee.PhoneNumber</td>
                     <td>@Employee.HiringDate</td>
-                    <partial name="_ActionButtonsPartialView" model="Employee.ID">
+                    <partial name="_ActionButtonsPartialView" model="@Employee.ID.ToString()">
                </tr> 
               
             }
