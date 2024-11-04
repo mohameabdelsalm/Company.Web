@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Web.Controllers
 {
-    [Authorize(Roles = "Employee")]
+    //[Authorize(Roles = "Employee")]
     public class EmployeeController : Controller
     {
         private readonly IEmployeeService _employeeService;

@@ -1,6 +1,7 @@
 ﻿using Company.Data.Context;
 using Company.Data.Entites;
 using Company.Repository.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +28,12 @@ namespace Company.Repository.Repository
         public void Delete(T entity)
         
         =>  _context.Remove(entity);
-            
-        
-        public IEnumerable<T> GetAll()
-        => _context.Set<T>().ToList();
 
+
+        public IEnumerable<T> GetAll()
+        
+        => _context.Set<T>().ToList();
+        
         public T GetById(int id)
       => _context.Set<T>().Find(id);
 
