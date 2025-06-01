@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Company.Service.Services
+namespace Company.Service.Interface
 {
     public class DepartmentService : IDepartmentService
     {
@@ -32,7 +32,7 @@ namespace Company.Service.Services
 
         public void Delete(DepartmentDto departmentDto)
         {
-            Department mappingDepartment = _mapper.Map<Department>(departmentDto);
+            var mappingDepartment = _unitOfWork.DepartmentRepository.GetById(departmentDto.ID);
             _unitOfWork.DepartmentRepository.Delete(mappingDepartment);
             _unitOfWork.Complete();
         }
@@ -60,10 +60,11 @@ namespace Company.Service.Services
             return mapdepartment;
         }
 
-        public void Update(DepartmentDto department)
+        public void Update( DepartmentDto department)
         {
-            //_unitOfWork.DepartmentRepository.Update(department);
-            //_unitOfWork.Complete();
+            var mappingDepartment = _mapper.Map<Department>(department);
+            _unitOfWork.DepartmentRepository.Update(mappingDepartment);
+            _unitOfWork.Complete();
         }
     }
 }

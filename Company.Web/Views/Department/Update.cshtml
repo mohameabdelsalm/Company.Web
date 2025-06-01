@@ -1,5 +1,8 @@
 ﻿@model DepartmentDto
+
 <form asp-action="Update">
+    <input type="hidden" asp-for="ID" />
+
     <div class="form-group">
         <label asp-for="Code" class="col-form-label"></label>
         <input asp-for="Code" class="form-control" />

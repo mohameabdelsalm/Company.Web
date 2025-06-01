@@ -1,8 +1,5 @@
-﻿using Company.Data.Entites;
-using Company.Service.Dto;
+﻿using Company.Service.Dto;
 using Company.Service.Interface;
-using Company.Service.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Company.Web.Controllers

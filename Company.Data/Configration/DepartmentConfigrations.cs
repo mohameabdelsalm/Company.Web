@@ -16,5 +16,8 @@ namespace Company.Data.Configration
             builder.Property(x => x.ID).UseIdentityColumn(10, 10);
             builder.HasIndex(x => x.Name).IsUnique(true);
         }
+
+        
     }
+
 }

@@ -4,10 +4,8 @@ using Company.Repository.Interface;
 using Company.Repository.Repository;
 using Company.Service.Interface;
 using Company.Service.Mapping;
-using Company.Service.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 namespace Company.Web
 {
