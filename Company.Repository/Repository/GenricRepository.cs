@@ -27,7 +27,7 @@ namespace Company.Repository.Repository
 
         public void Delete(T entity)
         
-        =>  _context.Remove(entity);
+        =>  _context.Set<T>().Remove(entity);
 
 
         public IEnumerable<T> GetAll()

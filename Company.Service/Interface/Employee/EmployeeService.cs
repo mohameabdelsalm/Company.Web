@@ -6,14 +6,14 @@ using Company.Service.Helper;
 using Company.Service.Interface;
 using Company.Service.Mapping;
 
-namespace Company.Service.Services
+namespace Company.Service.Interface
 {
     public class EmployeeService : IEmployeeService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public EmployeeService(IUnitOfWork unitOfWork,IMapper mapper)
+        public EmployeeService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
@@ -23,7 +23,7 @@ namespace Company.Service.Services
         {
             employeeDto.ImageUrl = DocumentSettings.UploadFile(employeeDto.Image, "Images");
 
-             Employee employee = _mapper.Map<Employee>(employeeDto);
+            Employee employee = _mapper.Map<Employee>(employeeDto);
 
             _unitOfWork.EmployeeRepository.Add(employee);
             _unitOfWork.Complete();
@@ -41,7 +41,7 @@ namespace Company.Service.Services
             var employees = _unitOfWork.EmployeeRepository.GetAll();
             IEnumerable<EmployeeDto> MapEmployees = _mapper.Map<IEnumerable<EmployeeDto>>(employees);
 
-           
+
             return MapEmployees;
         }
 
@@ -54,10 +54,10 @@ namespace Company.Service.Services
             var employees = _unitOfWork.EmployeeRepository.GetById(id.Value);
 
             if (employees is null)
-            
-             return null;
+
+                return null;
             EmployeeDto employeeDto = _mapper.Map<EmployeeDto>(employees);
-            
+
             return employeeDto;
         }
 
@@ -74,7 +74,7 @@ namespace Company.Service.Services
         public void Update(EmployeeDto employee)
         {
 
-           
+
         }
     }
 }

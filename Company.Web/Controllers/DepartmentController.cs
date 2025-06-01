@@ -72,13 +72,14 @@ namespace Company.Web.Controllers
         [HttpPost]
         public IActionResult Update(int? id, DepartmentDto department)
         {
-            if (department.ID != id.Value)
+            if (id == null || department.ID != id.Value)
                 return RedirectToAction("Error");
 
             _departmentService.Update(department);
             return RedirectToAction(nameof(Index));
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Delete(int id)
         {
             var department = _departmentService.GetById(id);
